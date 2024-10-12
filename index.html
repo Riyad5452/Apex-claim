@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Claim Form</title>
+    <link rel="icon" href="https://iconape.com/wp-content/png_logo_vector/apex-shoes-logo.png" sizes="48x48">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"/>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Niramit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/datetime/1.1.1/css/dataTables.dateTime.min.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 20px;
+            font-size: 12px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 50%;
+            padding: 5px;
+            font-size: 16px;
+            border: 2px solid transparent; /* Make the border transparent initially */
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 4px 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            font-family: 'Times New Roman', Times, serif;
+            background-image: linear-gradient(to right, #f9f9f9, #f9f9f9), 
+                              linear-gradient(to right, #e74c3c, #8e44ad); /* Gradient border effect */
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+        
+        .form-control:focus {
+            background-image: linear-gradient(to right, #f9f9f9, #f9f9f9), 
+                              linear-gradient(to right, #2ecc71, #3498db); /* Gradient effect on focus */
+            box-shadow: inset 0px 4px 12px rgba(0, 0, 0, 0.15), 
+                        0px 6px 12px rgba(0, 0, 0, 0.1); /* Deeper shadow on focus */
+        }
+        
+        .form-control:hover {
+            border-color: transparent; /* Keep the gradient border */
+            background-image: linear-gradient(to right, #f9f9f9, #f9f9f9), 
+                              linear-gradient(to right, #e74c3c, #f39c12); /* Change gradient on hover */
+            transform: scale(1.02); /* Slight zoom effect */
+        }
+
+    
+            
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        #nob td {
+            border: none;
+            }
+
+        #nobx td {
+            border: none;           /* সব বর্ডার সরানোর জন্য */
+            border-top: 1px solid black;  /* শুধুমাত্র উপরের বর্ডার রাখতে */
+        }
+        .dotdot {
+            border: none;
+            border-bottom: 1px dotted black;
+            width: 20ch; /* Width of approximately 40 characters */
+            display: inline-block; /* Ensure the element respects the width */
+        }
+
+
+        .report-title {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .signature-box {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box div {
+            width: 45%;
+            text-align: center;
+            border-top: 1px solid black;
+            padding-top: 5px;
+        }
+        .confirmation {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .artid {
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+        }
+        /* Style for print */
+        @media print {
+            body {
+                transform: scale(0.95); /* Scale the print layout */
+                transform-origin: top left; /* Scale from the top left corner */
+            }
+            .container {
+                border: none;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+       <form id="form" class="container m-4 pl-4" method="POST">
+<div class="container" id="firstPage">
+    <h2 class="card-header bg-success text-white" style="font-size: 27px; font-family: 'Cambria', serif;">
+        SETTLEMENT OF CUSTOMER'S CLAIM
+    </h2>
+    
+
+        <table>
+            <tr>
+                <td>Store: <input class="form-control" type="text" id="store" name="store" value="NONGOR FOOTWEAR"></td>
+                <td colspan="2">Month: <input class="form-control" onclick="cdate(this)" type="text" id="month" name="month"></td>
+                <td>Date: <input class="form-control" onclick="cdate(this)" type="text" id="date" name="date"></td>
+            </tr>
+            <tr>
+                <td>Article No: <input class="form-control" type="text" id="articleNo" name="articleNo"></td>
+                <td>Size: <input class="form-control" type="text" id="size" name="size"></td>
+                <td>Amount Paid: <input class="form-control" type="text" id="amountPaid" name="amountPaid"></td>
+                <td>Date of Purchase: <input class="form-control" onclick="cdate(this)" onchange="ctDate(this)" type="text" id="dateOfPurchase" name="dateOfPurchase"></td>
+            </tr>
+            <tr>
+                <td colspan="2">From where Purchased: <input class="form-control" type="text" id="purchaseStore" name="purchaseStore"></td>
+                <td>Date of Complain: <input class="form-control" onclick="cdate(this)" type="text" onchange="ctDate(this)" id="dateOfComplain" name="dateOfComplain"></td>
+                <td colspan="2">Period of Wear: <input class="form-control" type="text" id="periodOfWear" name="periodOfWear"></td>
+            </tr>
+            <tr>
+                <td colspan="5">Nature of Complain: <input class="form-control" type="text" id="complainNature" name="complainNature"></td>
+            </tr>
+            <tr>
+                <td colspan="2">Name of Customer: <input class="form-control" type="text" id="customerName" name="customerName"></td>
+                <td colspan="3">Address: <input class="form-control" type="text" id="customerAddress" name="customerAddress"></td>
+            </tr>
+        </table>
+
+        <h3>REPORT OF SHOP MANAGER</h3>
+        <table>
+            <tr>
+                <td colspan="5">1. State clearly detect or damage as you see it</td>
+            </tr>
+            <tr>
+                <td>(a) Upper Material: <input class="form-control" type="text" id="upperMaterial" name="upperMaterial"></td>
+                <td>(b) Sole Material: <input class="form-control" type="text" id="soleMaterial" name="soleMaterial"></td>
+                <td>(c) Other Components: <input class="form-control" type="text" id="otherComponents" name="otherComponents"></td>
+                <td>(d) Workmanship: <input class="form-control" type="text" id="workmanship" name="workmanship"></td>
+            </tr>
+            <tr>
+                <td colspan="4">2. Settlement Proposed by Store Manager: <input class="form-control" type="text" id="settlement" name="settlement"></td>
+            </tr>
+            <tr id="nob">
+                <td colspan="2">(a) Amount of Claim Shoes: <input class="form-control" type="text" id="AmtShoes" name="AmtShoes"></td>
+                <td>% <input class="form-control" type="text" id="Amtper" name="Amtper"></td>
+                <td id="artidtk" colspan="2">Tk <input class="form-control" type="text" id="amtTK" name="amtTK"></td>
+            </tr>
+        </table>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <div class="button is-primary" onclick="submitData()">Preview Data</div>
+            </div>
+        </div>
+    
+</div>
+
+<!-- ================================================================================================================== -->
+
+    
+<div class="container" id="secondPage" style="display: none;">
+    <h1 class="card-header" style="font-size: 27px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; display: flex; align-items: center; justify-content: flex-start;">
+          <!-- <img src="https://i.ibb.co/n6mQCYg/Nongor-removebg-preview.png" style="height: 50px"/> -->
+        </div>
+        <div style="flex: 0 1 auto; text-align: center; font-size: 20px; text-transform: uppercase; font-weight: bold; color: #172774;">Settlement of Customer's Claim</div>
+        <div id="usernameContainer" style="flex: 1; display: flex; justify-content: flex-end; font-size: 15px;">
+          <img src="https://iconape.com/wp-content/png_logo_vector/apex-shoes-logo.png" alt="Stamp" style="height: 40px;"/>
+        </div>
+      </h1>
+        
+        <!-- <h1 style="text-align: center; font-weight: bold; font-size: 20px;">Settlement of Customer's Claim</h1> -->
+            <div class="header-section">
+            <div><br>Store: <span style="width: 25ch; border: none; border-bottom: 1px dotted black;" id="displayStore"></span></div>
+            <div>Month: <span class="dotdot" id="displayMonth"></span><br> Date: <span class="dotdot" id="displayDate"></span></div>
+        
+        </div>
+
+        <table id="claimTable">
+            <tr>
+                <td width="30%">Article No. <span class="artid" id="displayArticleNo"></span></td>
+                <td width="10%" style="text-align: center">Size</td>
+                <td width="10%" style="text-align: center"><span class="artid" id="displaySize"></span></td>
+                <td width="30%">Amount Paid <span class="artid" id="displayAmountPaid"></span></td>
+                <td width="20%">Date of Purchase <span class="artid" id="displaydateOfPurchase"></span></td>
+            </tr>
+            <tr id="nob">
+                <td width="50%" colspan="3">From where Purchased &nbsp;&nbsp;<span class="artid" id="displayPurchaseStore"></span></td>
+                <td width="30%">Date of Complain <span class="artid" id="displayDateOfComplain"></span></td>
+                <td width="20%">Period of Wear <span class="artid" id="displayperiodOfWear"></span></td>
+            </tr>
+            <tr>
+                <td colspan="5">Nature of Complain: &nbsp;&nbsp;<span class="artid" id="natureOfComplain"></span></td>
+            </tr>
+            <tr id="nob">
+                <td colspan="3">Name of Customer: &nbsp;&nbsp;<span class="artid" id="displayCustomerName"></span></td>
+                <td colspan="2">Address: &nbsp;&nbsp;<span class="artid" id="displayCustomerAddress"></span></td>
+            </tr>
+            <tr id="nob">
+                <td colspan="5" style="text-align: center; font-weight: bold; font-size: 20px;">REPORT OF SHOP MANAGER</td>
+            </tr>
+            <tr id="nob">
+                <td colspan="5">1. State clearly detect or damage as you see it</td>
+            </tr>
+            
+            <tr class="claim-details" id="nob">
+                <td colspan="4">&nbsp;&nbsp;&nbsp;(a) Upper Material:&nbsp;&nbsp;<span class="artid" id="displayupper"></span></td>
+                <td>Signature of Store Manager</td>
+            </tr>
+            <tr class="claim-details">
+                <td colspan="5">&nbsp;&nbsp;&nbsp;(b) Sole Materials:&nbsp;&nbsp;<span class="artid" id="displaysole"></span></td>
+            </tr>
+            <tr class="claim-details">
+                <td colspan="5">&nbsp;&nbsp;&nbsp;(c) Other Components:&nbsp;&nbsp;<span class="artid" id="displayothers"></span></td>
+            </tr>
+            <tr class="claim-details" id="nobx">
+                <td colspan="4">&nbsp;&nbsp;&nbsp;(d) Workmanship:&nbsp;&nbsp;<span class="artid" id="displaywork"></span></td>
+                <td>Authorised by</td>
+            </tr>
+            <tr>
+                <td colspan="5">2. Settlement Proposed by Store Manager:&nbsp;&nbsp;<span class="artid" id="displaySettlement"></span></td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;&nbsp;<span class="artid"></span></td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;&nbsp;<span class="artid"></span></td>
+                
+            </tr>
+            <tr id="nob">
+                <td width="30%">(a) Amount of Claim Shoes &nbsp;&nbsp;<span class="artid" id="displayAmt"></span></td>
+                <td>%</td>
+                <td><span class="artid" id="displayPer"></span></td>
+                <td id="artidtk" colspan="2">Tk &nbsp;&nbsp;<span class="dotdot" id="displayAmtTK"></span></td>
+            </tr>
+            <tr id="nob">
+                <td colspan="3"></td>
+                <td id="artidtk" colspan="2">Tk ..........................................<span class="artid"></span></td>
+            </tr>
+            <tr id="nob">
+                <td colspan="3"></td>
+                <td id="artidtk">Tk ..........................................<span class="artid"></span></td>
+                <td>Authorised by</td>
+            </tr>
+            <tr id="nobx">
+                <td colspan="5" style="text-align: center; font-weight: bold; text-decoration: underline; font-size: 20px;">CONFIRMATION OF SETTLEMENT CLAIM BY CUSTOMER</td>
+            </tr>
+            <tr id="nob">
+                <td colspan="3">I hereby confirm having received:</td>
+                <td colspan="2" style="text-align: right;">I am very satisfied with the settlement:</td>
+            </tr>
+            <tr id="nobx">
+                <td colspan="4"></td>
+                <td style="text-align: center;">Signature of Customer</td>
+            </tr>
+        </table>
+        <div class="field is-grouped no-print">
+            <div class="control">
+                <div class="button is-primary" onclick="goBack()">Edit Data</div>
+                <div onclick="addNewData()">Print / Save as PDF</div>
+                <button class="button is-primary" type="submit" id="submit-button">Submit</button>
+            </div>
+        </div>
+    </form>
+    
+    <div id="message" style="display: none; margin: 20px; font-weight: bold; color: green; padding: 8px; background-color: beige; border-radius: 4px; border-color: aquamarine;"></div>
+
+<script>
+document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Submitting..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+          "https://script.google.com/macros/s/AKfycbz5BoxhZ7t7oPH-H8E61SNHxQF0qAiBh3vpkfu0BDOXrRt7lNxPuuo3La1nNdyNlAJG/exec",
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          }
+        )
+          .then(function (response) {
+            // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
+            } else {
+              throw new Error("Failed to submit the form.");
+            }
+          })
+          .then(function (data) {
+            // Display a success message
+            document.getElementById("message").textContent =
+              "Data submitted successfully!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch(function (error) {
+            // Handle errors, you can display an error message here
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";
+          });
+      });
+
+</script>
+<script>
+        
+    function submitData() {
+        // Collect input data
+        document.getElementById('displayStore').innerText = document.getElementById('store').value;
+        document.getElementById('displayMonth').innerText = document.getElementById('month').value;
+        document.getElementById('displayDate').innerText = document.getElementById('date').value;
+        document.getElementById('displayArticleNo').innerText = document.getElementById('articleNo').value;
+        document.getElementById('displaySize').innerText = document.getElementById('size').value;
+        document.getElementById('displayAmountPaid').innerText = document.getElementById('amountPaid').value;
+        document.getElementById('displaydateOfPurchase').innerText = document.getElementById('dateOfPurchase').value;
+        document.getElementById('displayPurchaseStore').innerText = document.getElementById('purchaseStore').value;
+        document.getElementById('displayDateOfComplain').innerText = document.getElementById('dateOfComplain').value;
+        document.getElementById('displayperiodOfWear').innerText = document.getElementById('periodOfWear').value;
+        document.getElementById('displayCustomerName').innerText = document.getElementById('customerName').value;
+        document.getElementById('displayCustomerAddress').innerText = document.getElementById('customerAddress').value;
+        document.getElementById('displaySettlement').innerText = document.getElementById('settlement').value;
+        document.getElementById('displayupper').innerText = document.getElementById('upperMaterial').value;
+        document.getElementById('displaysole').innerText = document.getElementById('soleMaterial').value;
+        document.getElementById('displayothers').innerText = document.getElementById('otherComponents').value;
+        document.getElementById('displaywork').innerText = document.getElementById('workmanship').value;
+        document.getElementById('displayAmt').innerText = document.getElementById('AmtShoes').value;
+        document.getElementById('displayPer').innerText = document.getElementById('Amtper').value;
+        document.getElementById('displayAmtTK').innerText = document.getElementById('amtTK').value;
+
+    
+        // Show the print page
+        document.getElementById('firstPage').style.display = 'none';
+        document.getElementById('secondPage').style.display = 'block';
+    }
+
+    function goBack() {
+        // Go back to the input page
+        document.getElementById('firstPage').style.display = 'block';
+        document.getElementById('secondPage').style.display = 'none';
+    }
+</script>
+    <script>
+    /**  ******* Date *********** **/
+      var minDate, maxDate, maxxDate, maxyDate;
+        
+    function cdate() {
+        minDate = new DateTime($('#date'), {
+                format: 'DD-MMM-YY' //'MMMM Do YYYY'
+            });
+        maxDate = new DateTime($('#month'), {
+                format: 'MMMM-YY'
+            });
+        maxxDate = new DateTime($('#dateOfPurchase'), {
+                format: 'DD-MMM-YY'
+            });
+        maxyDate = new DateTime($('#dateOfComplain'), {
+                format: 'DD-MMM-YY'
+            });
+        }
+
+        function ctDate(){
+let dateFrom = new Date(document.getElementById('dateOfPurchase').value).getTime();
+let dateTo = new Date(document.getElementById('dateOfComplain').value).getTime();
+console.log('dateFrom: '+ dateFrom)
+console.log('dateTo: '+ dateTo)
+
+let result = dateTo - dateFrom;
+console.log((result/86400000)+1);
+
+// if(isNaN(dateFrom) || isNaN(dateTo)){
+//   console.log('dateFrom isNaN:'+ isNaN(dateFrom))
+//   console.log('dateTo isNaN:'+ isNaN(dateTo))
+if (dateTo=="" || dateFrom==""){
+  document.getElementById('periodOfWear').value = "";
+
+}else if(dateTo < dateFrom){
+  swal({
+    title: 'Uppss...',
+    text: 'Date "To" can not less than Date "From"',
+    type: 'error',
+    timer: 3000,
+    showConfirmButton: false
+  });
+
+  document.getElementById('result').value = "";
+
+}else if(dateTo >= dateFrom){
+  document.getElementById('periodOfWear').value = (result/86400000)+1;
+}
+// mDate()
+};
+
+
+
+        function addNewData() {
+            // Clone the existing content
+            const container = document.getElementById('secondPage');
+            const newContent = container.cloneNode(true);
+            
+            // Clear the contents of the cloned content for new data input
+            // const inputsToClear = newContent.querySelectorAll('.artid');
+            // inputsToClear.forEach(input => {
+            //     input.textContent = ''; // Clear text content for new input
+            // });
+
+            // Append the cloned content to the container
+            container.appendChild(newContent);
+            
+            window.print();
+        }
+        
+</script>
+<!-- Include jQuery CDN in the head section -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js"></script>
+
+
+
+</body>
+</html>
